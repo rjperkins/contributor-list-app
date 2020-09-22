@@ -22,17 +22,14 @@ function App() {
       .then(response => response.json())
       .then(response => {
         if (response.message) {
-          console.log(response.message);
           setError(response.message)
         } else {
-          console.log(response);
           setContributors(response);
         }
       })
       .catch(err => {
         setError(err)
       })
-
     // setState({ organisation: '', repo: '' })
   }
 

@@ -16,7 +16,7 @@ export default function ListComponent({ contributorList, error, changePage, page
     return contributorList.length && !error ?
       <>
         <button className='button page' onClick={() => changePage(--pageNum)} disabled={pageNum === 1}>{'<<'}</button>
-        <button className='button page' onClick={() => changePage(++pageNum)} disabled={contributorList.length < 15}>{'>>'}</button>
+        <button className='button page' onClick={() => changePage(++pageNum)} disabled={contributorList.length < 40}>{'>>'}</button>
       </>
       :
       null
