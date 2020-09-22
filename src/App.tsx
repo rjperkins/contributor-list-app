@@ -14,39 +14,31 @@ function App() {
   const [error, setError] = useState(null);
   const [contributors, setContributors] = useState<IContributor[]>([])
 
+  const fetchContributors = (org: string, repo: string, num: number) => {
+    fetch(`https://api.github.com/repos/${org}/${repo}/contributors?per_page=40&page=${num}`)
+      .then(response => response.json())
+      .then(response => {
+        if (response.message) {
+          setError(response.message)
+        } else {
+          setContributors(response);
+        }
+      })
+      .catch(err => {
+        setError(err)
+      })
+  }
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     setPageNum(1)
     setError(null)
-    fetch(`https://api.github.com/repos/${state.organisation}/${state.repo}/contributors?per_page=40&page=${pageNum}`)
-      .then(response => response.json())
-      .then(response => {
-        if (response.message) {
-          setError(response.message)
-        } else {
-          setContributors(response);
-        }
-      })
-      .catch(err => {
-        setError(err)
-      })
-    // setState({ organisation: '', repo: '' })
+    fetchContributors(state.organisation, state.repo, pageNum)
   }
 
   const changePage = (num: number) => {
     setPageNum(num)
-    fetch(`https://api.github.com/repos/${state.organisation}/${state.repo}/contributors?per_page=40&page=${num}`)
-      .then(response => response.json())
-      .then(response => {
-        if (response.message) {
-          setError(response.message)
-        } else {
-          setContributors(response);
-        }
-      })
-      .catch(err => {
-        setError(err)
-      })
+    fetchContributors(state.organisation, state.repo, num)
     window.scrollTo(0, 0)
   }
 

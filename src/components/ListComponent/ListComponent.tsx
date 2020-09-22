@@ -13,10 +13,13 @@ type Props = {
 export default function ListComponent({ contributorList, error, changePage, pageNum }: Props) {
 
   const pageButtons = () => {
+    const lowerLimit = pageNum === 1;
+    const upperLimit = contributorList.length < 40;
     return contributorList.length && !error ?
       <>
-        <button className='button page' onClick={() => changePage(--pageNum)} disabled={pageNum === 1}>{'<<'}</button>
-        <button className='button page' onClick={() => changePage(++pageNum)} disabled={contributorList.length < 40}>{'>>'}</button>
+        <button className='button page' onClick={() => changePage(--pageNum)} disabled={lowerLimit}>{'<<'}</button>
+        <span className='page-number'>Page {pageNum}</span>
+        <button className='button page' onClick={() => changePage(++pageNum)} disabled={upperLimit}>{'>>'}</button>
       </>
       :
       null
@@ -25,7 +28,7 @@ export default function ListComponent({ contributorList, error, changePage, page
   return (
     <div className='container'>
       {pageButtons()}
-      <ul className='responsive-table'>
+      <ul className='responsive-table' >
         {contributorList && contributorList.length ?
           <li className='table-header'>
             <div className='col col-1'>User</div>
@@ -40,11 +43,11 @@ export default function ListComponent({ contributorList, error, changePage, page
           </li>
           :
           contributorList && contributorList.length ?
-            contributorList.map((contributor) => (
-              <li className='table-row' key={contributor.id}>
-                <div className='col col-1' data-label='Profile picture'>
+            contributorList.map((contributor) =>
+              <li className='table-row' key={contributor.id} data-testid='contributor'>
+                <div className='col col-1' data-label='User'>
                   <img src={contributor.avatar_url} alt='Github profile' className='github-pic' />
-                  <div data-label='User Name'>{contributor.login}</div>
+                  <div className='user-name' data-label='User Name' data-testid='contributor-user'>{contributor.login}</div>
                 </div>
                 <div className='col col-2' data-label='User ID'>{contributor.id}</div>
                 <div className='col col-3' data-label='No. of Contributions'>{contributor.contributions}</div>
@@ -54,7 +57,7 @@ export default function ListComponent({ contributorList, error, changePage, page
                   </a>
                 </div>
               </li>
-            )) :
+            ) :
             null
         }
       </ul>

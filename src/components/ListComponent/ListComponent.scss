@@ -34,7 +34,7 @@ ul {
 }
 .responsive-table {
   max-width: 700px;
-  margin: 10px auto;
+  margin: 20px auto;
   li {
     border-radius: 3px;
     padding: 5px 15px;
@@ -47,6 +47,7 @@ ul {
   .table-header {
     background-color: #95A5A6;
     font-size: 14px;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.03em;
   }
@@ -71,9 +72,10 @@ ul {
   .col-4 {
     flex-basis: 25%;
   }
-  // .col-5 {
-  //   flex-basis: 20%;
-  // }
+  .page-number {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
   
   @media all and (max-width: 767px) {
     .container {
@@ -91,12 +93,16 @@ ul {
       padding: 10px 0;
       &:before {
         color: #6C7A89;
+        font-weight: 700;
         padding-right: 10px;
         margin: auto 0;
         content: attr(data-label);
         flex-basis: 50%;
         text-align: right;
       }
+    }
+    .user-name {
+      margin: auto 10px;
     }
   }
 }
